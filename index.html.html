@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HALEL_EDITZ — Creative Editor</title>
+<meta name="description" content="HALEL_EDITZ — cinematic editing, VFX, motion design and visual storytelling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030305;--fg:#f4f4f0;--muted:#8d8d93;--line:rgba(255,255,255,.11);--acid:#b8ff35;--panel:#0b0b0e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,Arial,sans-serif;overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}button{font:inherit}
+.cursor,.cursor2{position:fixed;pointer-events:none;z-index:1000;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:difference}.cursor{width:8px;height:8px;background:white}.cursor2{width:34px;height:34px;border:1px solid white;transition:width .18s,height .18s}
+.noise{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+.bg-glow{position:fixed;width:55vw;height:55vw;right:-20vw;top:-20vw;border-radius:50%;background:var(--acid);filter:blur(150px);opacity:.08;pointer-events:none}
+.nav{position:fixed;z-index:50;left:20px;right:20px;top:18px;height:64px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);background:rgba(4,4,6,.65);backdrop-filter:blur(22px);border-radius:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.7px}.logo img{width:40px;height:40px;border-radius:50%;object-fit:contain}.logo span span{color:var(--acid)}
+.navlinks{display:flex;gap:27px;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#aaa}.navlinks a{position:relative}.navlinks a:after{content:"";position:absolute;left:0;bottom:-7px;width:0;height:1px;background:var(--acid);transition:.3s}.navlinks a:hover{color:white}.navlinks a:hover:after{width:100%}
+.menu{display:none;border:1px solid var(--line);background:none;color:white;border-radius:50%;width:40px;height:40px}
+.hero{min-height:100vh;padding:150px 7vw 70px;display:flex;align-items:center;position:relative;overflow:hidden}.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2;filter:contrast(1.35) saturate(.6)}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,#030305 0%,rgba(3,3,5,.84) 42%,rgba(3,3,5,.25) 100%),linear-gradient(0deg,#030305,transparent 35%,#030305 100%)}
+.hero-inner{position:relative;z-index:2;max-width:1320px;width:100%;margin:auto}.eyebrow{color:var(--acid);font-size:10px;font-weight:800;letter-spacing:4px}.hero h1{font-family:"Space Grotesk";font-size:clamp(70px,12vw,180px);line-height:.77;letter-spacing:-.09em;margin:24px 0 35px;font-weight:700}.stroke{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.8)}.hero-bottom{display:flex;align-items:end;justify-content:space-between;gap:30px}.hero-copy{max-width:560px;color:#aaa;line-height:1.75;font-size:15px}.actions{display:flex;gap:10px;margin-top:25px;flex-wrap:wrap}.btn{border:1px solid var(--line);padding:14px 19px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:1px;transition:.3s}.btn:hover{transform:translateY(-4px);border-color:var(--acid)}.btn.primary{background:var(--acid);color:#060606;border-color:var(--acid)}
+.hero-mark{font-size:clamp(90px,15vw,210px);font-weight:900;letter-spacing:-.13em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.12);line-height:.7}
+.scroll{position:absolute;bottom:32px;right:7vw;font-size:9px;letter-spacing:3px;color:#666;writing-mode:vertical-rl}
+section{padding:130px 7vw}.container{max-width:1320px;margin:auto}.section-top{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:55px}.section-title{font-family:"Space Grotesk";font-size:clamp(48px,7vw,96px);line-height:.82;letter-spacing:-.075em;margin:12px 0 0}.section-desc{max-width:390px;color:#777;font-size:13px;line-height:1.7}
+.projects{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.project{position:relative;overflow:hidden;border:1px solid var(--line);background:#08080a;border-radius:24px;min-height:540px}.project:nth-child(1){grid-column:span 5}.project:nth-child(2){grid-column:span 7}.project:nth-child(3){grid-column:span 7}.project:nth-child(4){grid-column:span 5}.project-media{position:absolute;inset:0}.project video{width:100%;height:100%;object-fit:cover;opacity:.8;transition:transform .8s,opacity .5s}.project:hover video{transform:scale(1.06);opacity:1}.project:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent 60%);pointer-events:none}.project-info{position:absolute;z-index:2;bottom:25px;left:25px;right:25px}.pill{display:inline-block;padding:7px 10px;border:1px solid rgba(255,255,255,.2);border-radius:30px;font-size:9px;letter-spacing:1px;background:rgba(0,0,0,.25);backdrop-filter:blur(10px)}.project h3{font-size:28px;margin:12px 0 5px}.project p{font-size:11px;color:#aaa;margin:0}.project-open{position:absolute;z-index:3;right:22px;top:22px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;background:rgba(0,0,0,.25);backdrop-filter:blur(10px);transition:.3s}.project:hover .project-open{background:var(--acid);color:#000}
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:25px 0}.marquee-track{display:inline-block;animation:marquee 22s linear infinite;font-family:"Space Grotesk";font-size:50px;font-weight:700;letter-spacing:-2px}.marquee-track span{color:var(--acid);margin:0 22px}@keyframes marquee{to{transform:translateX(-50%)}}
+.services{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}.service{padding:28px 20px 35px;border-right:1px solid var(--line);min-height:260px}.service:first-child{border-left:1px solid var(--line)}.service-num{color:var(--acid);font-size:10px}.service h3{font-family:"Space Grotesk";font-size:24px;margin:70px 0 10px}.service p{color:#777;line-height:1.65;font-size:12px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.about-art{min-height:520px;border:1px solid var(--line);border-radius:28px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(184,255,53,.16),transparent 32%),#08080a}.about-art img{position:absolute;width:230px;height:230px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;filter:drop-shadow(0 0 40px rgba(184,255,53,.18))}.orbit{position:absolute;left:50%;top:50%;width:390px;height:390px;border:1px solid rgba(255,255,255,.13);border-radius:50%;transform:translate(-50%,-50%) rotate(-20deg)}.orbit:after{content:"";position:absolute;width:8px;height:8px;background:var(--acid);border-radius:50%;top:15px;left:50%;box-shadow:0 0 20px var(--acid)}.about-text h2{font-family:"Space Grotesk";font-size:clamp(45px,6vw,78px);letter-spacing:-.07em;line-height:.88;margin:15px 0 30px}.about-text p{color:#888;line-height:1.8;font-size:14px;max-width:550px}
+.contact{padding-bottom:80px}.contact-box{border:1px solid var(--line);border-radius:30px;padding:90px 35px;text-align:center;background:radial-gradient(circle at 50% 0,rgba(184,255,53,.1),transparent 42%)}.contact-box h2{font-family:"Space Grotesk";font-size:clamp(60px,11vw,150px);letter-spacing:-.09em;line-height:.8;margin:20px 0}.contact-box p{color:#777}.contact-links{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:30px}.contact-links a{font-size:10px;font-weight:700;letter-spacing:.7px;border:1px solid var(--line);padding:13px 16px;border-radius:100px}.contact-links a:hover{border-color:var(--acid);color:var(--acid)}
+footer{padding:30px 7vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#555;font-size:10px;letter-spacing:1px}
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .8s,transform .8s}.reveal.show{opacity:1;transform:none}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.8);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:30px}.modal.open{display:flex}.modal-card{width:min(900px,100%);background:#09090b;border:1px solid var(--line);border-radius:25px;overflow:hidden;position:relative}.modal video{display:block;width:100%;max-height:78vh;object-fit:contain;background:#000}.close{position:absolute;right:15px;top:15px;z-index:3;border:1px solid white;background:#050505;color:white;border-radius:50%;width:40px;height:40px;cursor:pointer}
+@media(max-width:800px){body{cursor:auto}.cursor,.cursor2{display:none}.navlinks{display:none}.menu{display:block}.hero-bottom,.section-top{display:block}.hero-mark{display:none}.projects{display:grid;grid-template-columns:1fr}.project,.project:nth-child(n){grid-column:span 1;min-height:500px}.services{grid-template-columns:1fr 1fr}.service:nth-child(odd){border-left:1px solid var(--line)}.about-grid{grid-template-columns:1fr}.about-art{min-height:400px}}
+@media(max-width:520px){.nav{left:10px;right:10px;top:10px}.logo img{width:35px;height:35px}.logo{font-size:13px}.hero{padding-left:6vw;padding-right:6vw}.hero h1{font-size:64px}.services{grid-template-columns:1fr}.service{border-left:1px solid var(--line)}section{padding:95px 6vw}.contact-box{padding:70px 15px}.contact-box h2{font-size:64px}}
+</style>
+</head>
+<body>
+<div class="noise"></div><div class="bg-glow"></div><div class="cursor"></div><div class="cursor2"></div>
+
+<nav class="nav">
+<a class="logo" href="#"><img src="halel_editz_logo.png" alt="HALEL_EDITZ"><span>HALEL<span>_</span>EDITZ</span></a>
+<div class="navlinks"><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a></div>
+<a class="btn primary" href="#contact">START A PROJECT ↗</a><button class="menu">☰</button>
+</nav>
+
+<header class="hero">
+<video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1800&q=80"><source src="https://cdn.coverr.co/videos/coverr-a-man-editing-a-video-on-a-computer-1571/1080p.mp4" type="video/mp4"></video>
+<div class="hero-shade"></div><div class="hero-inner">
+<div class="eyebrow">HALEL_EDITZ / CREATIVE STUDIO</div>
+<h1>EDIT.<br><span class="stroke">BREAK.</span><br>CREATE.</h1>
+<div class="hero-bottom"><div><p class="hero-copy">Cinematic edits, aggressive transitions, VFX and motion design made for creators who want their footage to hit different.</p><div class="actions"><a class="btn primary" href="#work">EXPLORE MY WORK ↗</a><a class="btn" href="https://www.instagram.com/halel_editz/" target="_blank">INSTAGRAM ↗</a></div></div><div class="hero-mark">H/E</div></div>
+</div><div class="scroll">SCROLL TO EXPLORE ↓</div>
+</header>
+
+<div class="marquee"><div class="marquee-track">VISUALS <span>✦</span> VFX <span>✦</span> MOTION <span>✦</span> EDITING <span>✦</span> VISUALS <span>✦</span> VFX <span>✦</span> MOTION <span>✦</span> EDITING <span>✦</span></div></div>
+
+<section id="work"><div class="container">
+<div class="section-top reveal"><div><div class="eyebrow">01 / SELECTED WORK</div><h2 class="section-title">RECENT<br>PROJECTS.</h2></div><p class="section-desc">A premium project wall for your latest edits. Replace the demo video URLs with your own exported reels when you're ready.</p></div>
+<div class="projects">
+<div class="project reveal" data-video="https://cdn.coverr.co/videos/coverr-video-editor-working-1574/1080p.mp4"><div class="project-media"><video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80"><source src="https://cdn.coverr.co/videos/coverr-video-editor-working-1574/1080p.mp4"></video></div><div class="project-open">↗</div><div class="project-info"><span class="pill">REEL 01 / VFX</span><h3>VELOCITY</h3><p>Speed ramps · shake · impact transitions</p></div></div>
+<div class="project reveal" data-video="https://cdn.coverr.co/videos/coverr-a-video-editor-working-1573/1080p.mp4"><div class="project-media"><video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=80"><source src="https://cdn.coverr.co/videos/coverr-a-video-editor-working-1573/1080p.mp4"></video></div><div class="project-open">↗</div><div class="project-info"><span class="pill">REEL 02 / CINEMATIC</span><h3>NIGHT DRIVE</h3><p>Color grade · atmosphere · compositing</p></div></div>
+<div class="project reveal" data-video="https://cdn.coverr.co/videos/coverr-editing-a-video-on-a-laptop-1572/1080p.mp4"><div class="project-media"><video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80"><source src="https://cdn.coverr.co/videos/coverr-editing-a-video-on-a-laptop-1572/1080p.mp4"></video></div><div class="project-open">↗</div><div class="project-info"><span class="pill">REEL 03 / MOTION</span><h3>IMPACT</h3><p>Typography · rhythm · dynamic movement</p></div></div>
+<div class="project reveal" data-video="https://cdn.coverr.co/videos/coverr-a-man-editing-a-video-on-a-computer-1571/1080p.mp4"><div class="project-media"><video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=900&q=80"><source src="https://cdn.coverr.co/videos/coverr-a-man-editing-a-video-on-a-computer-1571/1080p.mp4"></video></div><div class="project-open">↗</div><div class="project-info"><span class="pill">BEHIND THE SCENES</span><h3>THE TIMELINE</h3><p>Process · editing · creative direction</p></div></div>
+</div></div></section>
+
+<section id="services"><div class="container">
+<div class="section-top reveal"><div><div class="eyebrow">02 / SERVICES</div><h2 class="section-title">BUILT TO<br>HIT HARD.</h2></div><p class="section-desc">From raw footage to final export, every detail is shaped around rhythm, energy and visual storytelling.</p></div>
+<div class="services">
+<div class="service reveal"><span class="service-num">01</span><h3>EDITING</h3><p>Beat-sync cuts, storytelling, pacing, speed ramps and high-retention social edits.</p></div>
+<div class="service reveal"><span class="service-num">02</span><h3>VFX</h3><p>Tracking, compositing, particles, glow, screen effects and cinematic enhancements.</p></div>
+<div class="service reveal"><span class="service-num">03</span><h3>MOTION</h3><p>Animated typography, dynamic transitions, camera movement and graphic systems.</p></div>
+<div class="service reveal"><span class="service-num">04</span><h3>COLOR</h3><p>Stylized grades, contrast shaping and custom looks designed around your footage.</p></div>
+</div></div></section>
+
+<section id="about"><div class="container about-grid">
+<div class="about-art reveal"><div class="orbit"></div><img src="halel_editz_logo.png" alt="HALEL_EDITZ logo"></div>
+<div class="about-text reveal"><div class="eyebrow">03 / ABOUT THE EDITOR</div><h2>YOUR VISION.<br>MY TIMELINE.</h2><p>I'm <b>Haleluya</b>, the creator behind <b>HALEL_EDITZ</b>. I focus on energetic edits, VFX, transitions and motion graphics that turn ordinary footage into something people remember.</p><p>Send the footage, reference and deadline. I'll handle the movement.</p><div class="actions"><a class="btn primary" href="mailto:haleluyakefle6@gmail.com">EMAIL ME ↗</a></div></div>
+</div></section>
+
+<section id="contact" class="contact"><div class="container"><div class="contact-box reveal"><div class="eyebrow">04 / START A PROJECT</div><h2>LET'S<br>CREATE.</h2><p>Available for editing, VFX, motion design and creative collaborations.</p><div class="contact-links"><a href="mailto:haleluyakefle6@gmail.com">✉ EMAIL</a><a href="tel:+251991939499">☎ +251 991 939 499</a><a href="https://t.me/True_lumen" target="_blank">TELEGRAM</a><a href="https://www.instagram.com/halel_editz/" target="_blank">INSTAGRAM</a><a href="https://youtube.com/@haleluyakefle?si=qocTWCsXOG6SRj-e" target="_blank">YOUTUBE</a></div></div></div></section>
+
+<footer><span>© 2026 HALEL_EDITZ</span><span>EDIT. BREAK. CREATE.</span></footer>
+
+<div class="modal" id="modal"><div class="modal-card"><button class="close" id="close">×</button><video id="modalVideo" controls autoplay></video></div></div>
+
+<script>
+const c=document.querySelector('.cursor'),c2=document.querySelector('.cursor2');
+window.addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';c2.style.left=e.clientX+'px';c2.style.top=e.clientY+'px'});
+document.querySelectorAll('a,.project,button').forEach(el=>{el.addEventListener('mouseenter',()=>{c2.style.width='55px';c2.style.height='55px'});el.addEventListener('mouseleave',()=>{c2.style.width='34px';c2.style.height='34px'})});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(x=>observer.observe(x));
+const modal=document.getElementById('modal'), mv=document.getElementById('modalVideo');
+document.querySelectorAll('.project').forEach(p=>p.addEventListener('click',()=>{mv.src=p.dataset.video;modal.classList.add('open');mv.play().catch(()=>{})}));
+function closeModal(){modal.classList.remove('open');mv.pause();mv.removeAttribute('src');mv.load()}
+document.getElementById('close').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.querySelector('.menu').onclick=()=>{document.querySelector('.navlinks').style.display=document.querySelector('.navlinks').style.display==='flex'?'none':'flex';document.querySelector('.navlinks').style.position='absolute';document.querySelector('.navlinks').style.top='60px';document.querySelector('.navlinks').style.right='10px';document.querySelector('.navlinks').style.padding='20px';document.querySelector('.navlinks').style.flexDirection='column';document.querySelector('.navlinks').style.background='#09090b';document.querySelector('.navlinks').style.border='1px solid rgba(255,255,255,.12)';document.querySelector('.navlinks').style.borderRadius='15px'};
+</script>
+</body>
+</html>
